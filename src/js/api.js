@@ -3,7 +3,7 @@
 export const getRandomCocktails = async () => { 
     let cocktailArray =[];
     for (let i =1; i<=5; i++) {
-        const response = await fetch('www.thecocktaildb.com/api/json/v1/1/random.php');
+        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
         const cocktailResponseJson = await response.json();
         const cocktail = mapCocktailData(cocktailResponseJson);
         cocktailArray.push(cocktail);
@@ -11,7 +11,7 @@ export const getRandomCocktails = async () => {
     return cocktailArray;
 };
 
-const mapCocktailData = (rawDrink) => {
+const mapCocktailData = async (rawDrink) => {
    /* {
         idCocktail : idDrink,
         name: strDrink;
@@ -24,15 +24,14 @@ const mapCocktailData = (rawDrink) => {
         instructions:strInstructions.split
         }
         */
-
+const drink =  rawDrink.drinks[0];
 const cocktail = {
-    idCocktail: rawDrink.drinks.idDrink,
-    idCocktail2: rawDrink.drinks[0],
-    name: rawDrink.drinks,
-    category: rawDrinks.strCategory,
-    image: rawDrink.strDrinkThumb,
+    idCocktail: drink.idDrink,
+    name: drink.strDrink,
+    category: drink.strCategory,
+    image: drink.strDrinkThumb,
 
-    instructions: strInstructions
+   // instructions: strInstructions
 };
 return cocktail;
 
