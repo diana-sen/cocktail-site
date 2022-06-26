@@ -12,10 +12,14 @@ const cleanView = (element) => {
 
 
 const renderCardCocktail = (element) => {
+
+    const card = document.createElement('div');
+    card.className = 'p-2';
     
     const cardCocktailDiv = document.createElement('div');
     cardCocktailDiv.setAttribute('onclick', 'alert("Ok")');
-    cardCocktailDiv.className = 'card';
+    cardCocktailDiv.className = 'card custom-card';
+    card.appendChild(cardCocktailDiv);
 
     const cocktailImg = document.createElement('img');
     cocktailImg.setAttribute('src', element.image);
@@ -37,12 +41,12 @@ const renderCardCocktail = (element) => {
     cardCategory.innerHTML = `Category: ${element.category}`;
     cardCocktailSubDiv.appendChild(cardCategory);
   
-    return cardCocktailDiv;
+    return card;
 }
 
 async function randomContainer () {
     const cardDeckDiv = document.createElement('div');
-    cardDeckDiv.className = 'card-deck';
+    cardDeckDiv.className = 'row justify-content-start';
     const randomCocktails = await api.getRandomCocktails();
     randomCocktails.forEach( (cocktail) => {
         cardDeckDiv.appendChild(renderCardCocktail(cocktail));
@@ -71,8 +75,7 @@ const formElementSearch = document.querySelector('#search-form');
 
 formElementSearch.addEventListener('submit', (event) => {
     // evitar que el formulario se envie por defecto
-    event.preventDefault();
-   
+    event.preventDefault(); 
     // obtener los elementos html
   const keywordInputElement = event.target.searchBox;
     if (!keywordInputElement?.value) {
@@ -83,31 +86,9 @@ formElementSearch.addEventListener('submit', (event) => {
     runSearch(searchText);
    // cleanView();
    // randomContainer();
-
 });
 
 
-/*
-<div class="card">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-
-    </div>
-  </div>
 
 
-// de codepen: https://codepen.io/francoiscoron/pen/ExQLvYw
-<div class="card">
-			<div class="card__inner">
-				<div class="card__pic">
-					<img src="https://images.unsplash.com/photo-1611265023526-707d240623af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-				</div>
-				<div class="card__content">
-					<h2>I'am a card!</h2>
-					<p>This is my content</p>
-				</div>
-			</div>
-		</div>
-*/
+

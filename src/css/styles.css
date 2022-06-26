@@ -193,6 +193,12 @@ body {
   margin-top: 20px;
 
 }
+/* ..........////DisplayCocktails///........... */
+
+.custom-card {
+  width: 15rem;
+}
+
 /* ..........////Food category///........... */
 
 #food {
