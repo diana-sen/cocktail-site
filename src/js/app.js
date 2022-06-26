@@ -4,6 +4,7 @@ import * as api from './api.js';
 //const seachElement = document.querySelector('#search');
 const NOT_IMAGE_TEXT = 'Not image found';
 //let globalPokemons = [];
+const SEARCH_RESULTS = 'searchResults';
 
 const cleanView = (element) => {
     element.innerHTML = '';
@@ -54,11 +55,15 @@ async function randomContainer () {
 randomContainer();
 
 
+
  const runSearch = async (inputSearchText) => {
     const searchResults = await api.searchCocktailsByName(inputSearchText);
     console.log(searchResults);
+    localStorage.setItem(SEARCH_RESULTS, JSON.stringify(searchResults));
 
 };  
+
+
 
 
 // Listen to form event
