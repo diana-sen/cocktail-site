@@ -10,7 +10,6 @@ const cleanView = (element) => {
     element.innerHTML = '';
 }
 
-
 const renderCardCocktail = (element) => {
 
     const card = document.createElement('div');
@@ -44,7 +43,7 @@ const renderCardCocktail = (element) => {
     return card;
 }
 
-async function randomContainer () {
+async function loadRandomContainer () {
     const randomCocktailContainer = document.getElementById('random-cocktail-container');
     if (randomCocktailContainer){
         const cardDeckDiv = document.createElement('div');
@@ -53,13 +52,10 @@ async function randomContainer () {
         randomCocktails.forEach( (cocktail) => {
             cardDeckDiv.appendChild(renderCardCocktail(cocktail));
         } );
-
         cleanView(randomCocktailContainer);
         randomCocktailContainer.appendChild(cardDeckDiv); 
- 
     }
 };
-randomContainer();
 
  const runSearch = async (inputSearchText) => {
     const searchResults = await api.searchCocktailsByName(inputSearchText);
@@ -68,31 +64,31 @@ randomContainer();
 };  
 
 // Listen to form event
-const formElementSearch = document.querySelector('#search-form');
-formElementSearch.addEventListener('submit', (event) => {
-    // evitar que el formulario se envie por defecto
-    event.preventDefault(); 
-    // obtener los elementos html
-  const keywordInputElement = event.target.searchBox;
-    if (!keywordInputElement?.value) {
-        return;
-    }
-    // obtener los value de los elementos html
-    const searchText = keywordInputElement.value;
-    runSearch(searchText);
-   // cleanView();
-   // randomContainer();
-});
+const addSearchFormListener = () => { 
+    const formElementSearch = document.querySelector('#search-form');
+    formElementSearch.addEventListener('submit', (event) => {
+        // evitar que el formulario se envie por defecto
+        event.preventDefault(); 
+        // obtener los elementos html
+    const keywordInputElement = event.target.searchBox;
+        if (!keywordInputElement?.value) {
+            return;
+        }
+        // obtener los value de los elementos html
+        const searchText = keywordInputElement.value;
+        runSearch(searchText);
+    // cleanView();
+    // randomContainer();
+    });
+};
 
 //get  localStorage data
-function getSearchResults() {
+const getSearchResults = () => {
     return JSON.parse(localStorage.getItem(SEARCH_RESULTS));   
     //filtrar por nombre y categoría
 }
 
-
-
- const buildSearchContainer = () => {
+ const loadSearchResultsContainer = () => {
     console.log("entra");
     const resultsCocktailContainer = document.getElementById('results-cocktail-container');
     if (resultsCocktailContainer){
@@ -105,13 +101,15 @@ function getSearchResults() {
         } );
         
         cleanView(resultsCocktailContainer);
-        resultsCocktailContainer.appendChild(cardDeckDiv);
-    
+        resultsCocktailContainer.appendChild(cardDeckDiv);   
     } //luego meter else, alerta
 };
 
-buildSearchContainer();
-
-
-
+const loadIndexListenerAndContainer = () => {
+    addSearchFormListener();
+    loadRandomContainer();
+    
+}
+window.loadIndexListenerAndContainer = loadIndexListenerAndContainer;
+window.loadSearchResultsContainer = loadSearchResultsContainer;
 
