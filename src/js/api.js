@@ -5,8 +5,8 @@ export const getRandomCocktails = async () => {
         const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
         const cocktailResponseJson = await response.json();
         const cocktail = mapCocktailData(cocktailResponseJson.drinks[0]);
-        console.log(cocktail);
-        console.log(cocktailResponseJson);
+       // console.log(cocktail);
+       // console.log(cocktailResponseJson);
         cocktailArray.push(cocktail);
         
     }
@@ -46,10 +46,9 @@ export const searchCocktailsByName = async (searchingText) => {
     let cocktailArray =[];
         const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchingText}`);
         const cocktailResponseJson = await response.json();
-        cocktailResponseJson.drinks.foreach((searchDrink) => {
+        cocktailResponseJson.drinks.forEach((searchDrink) => {
             const cocktail = mapCocktailData(searchDrink);
             cocktailArray.push(cocktail);
-
         }) ;
      
     return cocktailArray;  

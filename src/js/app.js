@@ -51,8 +51,36 @@ async function randomContainer () {
     cleanView(randomCocktailContainer);
     randomCocktailContainer.appendChild(cardDeckDiv); 
 }
-
 randomContainer();
+
+
+ const runSearch = async (inputSearchText) => {
+    const searchResults = await api.searchCocktailsByName(inputSearchText);
+    console.log(searchResults);
+
+};  
+
+
+// Listen to form event
+const formElementSearch = document.querySelector('#search-form');
+
+formElementSearch.addEventListener('submit', (event) => {
+    // evitar que el formulario se envie por defecto
+    event.preventDefault();
+   
+    // obtener los elementos html
+  const keywordInputElement = event.target.searchBox;
+    if (!keywordInputElement?.value) {
+        return;
+    }
+    // obtener los value de los elementos html
+    const searchText = keywordInputElement.value;
+    runSearch(searchText);
+   // cleanView();
+   // randomContainer();
+
+});
+
 
 /*
 <div class="card">
