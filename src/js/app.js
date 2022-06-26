@@ -5,8 +5,10 @@ import * as api from './api.js';
 const NOT_IMAGE_TEXT = 'Not image found';
 //let globalPokemons = [];
 
+const cleanView = (element) => {
+    element.innerHTML = '';
+}
 
-console.log(api.getRandomCocktails());
 
 const renderCardCocktail = (element) => {
     
@@ -46,8 +48,8 @@ async function randomContainer () {
     } );
 
     const randomCocktailContainer = document.getElementById('random-cocktail-container');
-    randomCocktailContainer.appendChild(cardDeckDiv);
-    
+    cleanView(randomCocktailContainer);
+    randomCocktailContainer.appendChild(cardDeckDiv); 
 }
 
 randomContainer();

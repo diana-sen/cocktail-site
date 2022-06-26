@@ -183,7 +183,16 @@ body {
   object-fit: cover;
   object-position: right;
 }
+/* ..........////SearchBox///........... */
+.search-box {
+  
+  width: 360px;
+  height: 42px;
+  background: url(../images/ic-search.svg) no-repeat scroll white 6px 6px;
+  padding-left: 32px;
+  margin-top: 20px;
 
+}
 /* ..........////Food category///........... */
 
 #food {
