@@ -1,9 +1,6 @@
 import * as api from './api.js';
 
-//const mainDiv = document.querySelector('#container-pokemons');
-//const seachElement = document.querySelector('#search');
 const NOT_IMAGE_TEXT = 'Not image found';
-//let globalPokemons = [];
 const SEARCH_RESULTS = 'searchResults';
 
 const cleanView = (element) => {
@@ -61,12 +58,13 @@ async function loadRandomContainer () {
     const searchResults = await api.searchCocktailsByName(inputSearchText);
     console.log(searchResults);
     localStorage.setItem(SEARCH_RESULTS, JSON.stringify(searchResults));
+
 };  
 
 // Listen to form event
 const addSearchFormListener = () => { 
     const formElementSearch = document.querySelector('#search-form');
-    formElementSearch.addEventListener('submit', (event) => {
+    formElementSearch.addEventListener('submit', async (event) => {
         // evitar que el formulario se envie por defecto
         event.preventDefault(); 
         // obtener los elementos html
@@ -76,9 +74,8 @@ const addSearchFormListener = () => {
         }
         // obtener los value de los elementos html
         const searchText = keywordInputElement.value;
-        runSearch(searchText);
-    // cleanView();
-    // randomContainer();
+        await runSearch(searchText);
+        window.location.href = "./mainSearch.html";   
     });
 };
 
@@ -89,10 +86,8 @@ const getSearchResults = () => {
 }
 
  const loadSearchResultsContainer = () => {
-    console.log("entra");
     const resultsCocktailContainer = document.getElementById('results-cocktail-container');
     if (resultsCocktailContainer){
-
         const cardDeckDiv = document.createElement('div');
         cardDeckDiv.className = 'row justify-content-start';
         const searchResultsCocktails = getSearchResults();
@@ -112,4 +107,4 @@ const loadIndexListenerAndContainer = () => {
 }
 window.loadIndexListenerAndContainer = loadIndexListenerAndContainer;
 window.loadSearchResultsContainer = loadSearchResultsContainer;
-
+window.loadRandomContainer = loadRandomContainer;
