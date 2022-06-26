@@ -45,34 +45,30 @@ const renderCardCocktail = (element) => {
 }
 
 async function randomContainer () {
-    const cardDeckDiv = document.createElement('div');
-    cardDeckDiv.className = 'row justify-content-start';
-    const randomCocktails = await api.getRandomCocktails();
-    randomCocktails.forEach( (cocktail) => {
-        cardDeckDiv.appendChild(renderCardCocktail(cocktail));
-    } );
-
     const randomCocktailContainer = document.getElementById('random-cocktail-container');
-    cleanView(randomCocktailContainer);
-    randomCocktailContainer.appendChild(cardDeckDiv); 
-}
+    if (randomCocktailContainer){
+        const cardDeckDiv = document.createElement('div');
+        cardDeckDiv.className = 'row justify-content-start';
+        const randomCocktails = await api.getRandomCocktails();
+        randomCocktails.forEach( (cocktail) => {
+            cardDeckDiv.appendChild(renderCardCocktail(cocktail));
+        } );
+
+        cleanView(randomCocktailContainer);
+        randomCocktailContainer.appendChild(cardDeckDiv); 
+ 
+    }
+};
 randomContainer();
-
-
 
  const runSearch = async (inputSearchText) => {
     const searchResults = await api.searchCocktailsByName(inputSearchText);
     console.log(searchResults);
     localStorage.setItem(SEARCH_RESULTS, JSON.stringify(searchResults));
-
 };  
-
-
-
 
 // Listen to form event
 const formElementSearch = document.querySelector('#search-form');
-
 formElementSearch.addEventListener('submit', (event) => {
     // evitar que el formulario se envie por defecto
     event.preventDefault(); 
@@ -88,6 +84,33 @@ formElementSearch.addEventListener('submit', (event) => {
    // randomContainer();
 });
 
+//get  localStorage data
+function getSearchResults() {
+    return JSON.parse(localStorage.getItem(SEARCH_RESULTS));   
+    //filtrar por nombre y categoría
+}
+
+
+
+ const buildSearchContainer = () => {
+    console.log("entra");
+    const resultsCocktailContainer = document.getElementById('results-cocktail-container');
+    if (resultsCocktailContainer){
+
+        const cardDeckDiv = document.createElement('div');
+        cardDeckDiv.className = 'row justify-content-start';
+        const searchResultsCocktails = getSearchResults();
+        searchResultsCocktails.forEach((cocktail) => {
+            cardDeckDiv.appendChild(renderCardCocktail(cocktail));
+        } );
+        
+        cleanView(resultsCocktailContainer);
+        resultsCocktailContainer.appendChild(cardDeckDiv);
+    
+    } //luego meter else, alerta
+};
+
+buildSearchContainer();
 
 
 
